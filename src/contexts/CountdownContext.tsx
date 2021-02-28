@@ -4,10 +4,11 @@ import { ChallengesContext } from "./ChallengesContext";
 interface CountdownContextData {
     minutes: number;
     seconds: number;
+    setMinutes: (min) => void;
     hasFinished: boolean;
     isActive: boolean;
-    startCountdown: ()=> void;
-    resetCountdown: ()=> void;
+    startCountdown: () => void;
+    resetCountdown: () => void;
 
 }
 
@@ -19,32 +20,43 @@ interface CountdownProviderProps {
 
 let countdownTimeout: NodeJS.Timeout;
 
-export function CountdownProvider ({ children }: CountdownProviderProps ){
+export function CountdownProvider({ children }: CountdownProviderProps) {
 
     const { startNewChallenge } = useContext(ChallengesContext);
 
-    const [time, setTime] = useState(1*3);
+    const [time, setTime] = useState(25 * 60);
     const [isActive, setIsActive] = useState(false);
     const [hasFinished, setHasFinished] = useState(false);
 
     const minutes = Math.floor(time/60);
     const seconds = time % 60;
 
-    function startCountdown(){
+    function startCountdown() {
         setIsActive(true);
     }
 
-    function resetCountdown(){
+    function setMinutes(min) {
+        const timer = min * 60
+        setTime(timer);
+    }
+
+
+
+
+   
+
+    function resetCountdown() {
         setIsActive(false);
         clearTimeout(countdownTimeout);
         setHasFinished(false);
-        setTime(0.05*60);
+        setTime(25 * 60);
     }
 
-    useEffect(()=> {
-        if(isActive && time > 0){
-            countdownTimeout = setTimeout(()=> {
-                setTime(time -1);
+
+    useEffect(() => {
+        if (isActive && time > 0) {
+            countdownTimeout = setTimeout(() => {
+                setTime(time - 1);
             }, 1000)
         } else if (isActive && time == 0) {
             setHasFinished(true);
@@ -61,6 +73,7 @@ export function CountdownProvider ({ children }: CountdownProviderProps ){
             hasFinished,
             isActive,
             startCountdown,
+            setMinutes,
             resetCountdown,
         }}>
             {children}

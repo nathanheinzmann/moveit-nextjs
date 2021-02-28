@@ -2,6 +2,7 @@ import { createContext, useState, ReactNode, useEffect } from 'react';
 import Cookies from 'js-cookie';
 import challenges from '../../challenges.json';
 import { LevelUpModal } from '../components/LevelUpModal';
+import { SetInfo } from '../components/SetInfo';
 
 
  
@@ -23,6 +24,8 @@ interface ChallangesContextData{
     experienceToNextLevel: number;
     beginLevel: number;
     closeLevelUpModal: ()=> void;
+    closeSetInfo: ()=> void;
+    openSetInfo: ()=> void;
 }
 
 interface ChallengesProviderProps {
@@ -46,7 +49,9 @@ export function ChallengesProvider({ children, ...rest } : ChallengesProviderPro
     const [activeChallenge, setActiveChallenge] = useState(null);
     const experienceToNextLevel = Math.pow((level+1)*4, 2)
     const [beginLevel, setBeginLevel] = useState(rest.beginLevel ?? 0);
-    const [isLevelUpModalOpen, setIisLevelUpModalOpen] = useState(false)
+    const [isLevelUpModalOpen, setIsLevelUpModalOpen] = useState(false);
+    const [isSetInfoOpen, setIsSetInfoOpen] = useState(false);
+
     
     useEffect(()=>{
         Notification.requestPermission();
@@ -60,13 +65,21 @@ export function ChallengesProvider({ children, ...rest } : ChallengesProviderPro
     }, [level, currentExperience, challengesCompleted, beginLevel]);
 
     function closeLevelUpModal(){
-        setIisLevelUpModalOpen(false);
+        setIsLevelUpModalOpen(false);
+    }
+
+    function closeSetInfo(){
+        setIsSetInfoOpen(false);
+    }
+
+    function openSetInfo(){
+        setIsSetInfoOpen(true);
     }
 
     function levelUp(){
         setBeginLevel(experienceToNextLevel);
         setLevel(level +1);
-        setIisLevelUpModalOpen(true);
+        setIsLevelUpModalOpen(true);
     }  
 
     function startNewChallenge(){
@@ -116,10 +129,14 @@ export function ChallengesProvider({ children, ...rest } : ChallengesProviderPro
             completeChallenge,
             beginLevel,
             closeLevelUpModal,
+            closeSetInfo,
+            openSetInfo,
             }}>
             {children}
 
             {isLevelUpModalOpen && < LevelUpModal />}
+            {isSetInfoOpen && < SetInfo />}
+
         </ChallengesContext.Provider>
     );
 }

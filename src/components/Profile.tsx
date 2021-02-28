@@ -3,7 +3,7 @@ import { ChallengesContext } from '../contexts/ChallengesContext';
 import styles from '../styles/components/Profile.module.css';
 
 export function Profile(){
-    const { level } = useContext(ChallengesContext)
+    const { level, openSetInfo } = useContext(ChallengesContext)
 
     return(
         <div className={styles.profileContainer}>
@@ -14,6 +14,10 @@ export function Profile(){
                     <img src="icons/level.svg" alt="level"/>
                     Level {level}
                 </p>
+            </div>
+            <div >
+                <button type="button" className={styles.buttonSetInfo}
+                onClick={openSetInfo}> Alterar Informações </button>
             </div>
         </div>
     );

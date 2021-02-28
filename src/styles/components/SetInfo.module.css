@@ -1,0 +1,60 @@
+.setInfoOverlay {
+    background: rgba(242, 243, 245, 0.8);
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.setInfoContainer {
+    background: var(--white);
+    width: 100%;
+    max-width: 400px;
+    padding: 2rem 3rem;
+    border-radius: 5px;
+    box-shadow: 0 0 60px rgba(0, 0, 0, 0.05);
+    text-align: center;
+    position: relative;
+}
+
+.setInfoContainer strong {
+    font-size: 1.25rem;
+    color: var(--title);
+}
+
+.setInfoContainer p {
+    font-size: 1.25rem;
+    color: var(--text);
+}
+
+.setInfoContainer button {
+    position: absolute;
+    right: 0.5rem;
+    top: 0.5rem;
+    background: transparent;
+    border: 0;
+}
+
+.inputInfo{
+    display: flex;
+    flex-direction: column;
+}
+
+.inputInfo strong {
+    margin: 1.5rem 0rem 0.5rem 0rem;
+}
+
+.inputMinSec {
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.inputMinSec input{
+    max-width: 49.5%;
+}
